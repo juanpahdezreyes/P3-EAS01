@@ -1,31 +1,3 @@
-me salen estos errores en mi codi
-
-S D:\Juan Pablo Hernandez Reyes 4D\ea2\P3-EAS02> mingw32-make
-g++ -Isrc/include -c *.cpp
-g++ *.o -o main -Lsrc/lib -lsfml-graphics -lsfml-window -lsfml-system -lopengl32
-PS D:\Juan Pablo Hernandez Reyes 4D\ea2\P3-EAS02> mingw32-make
-g++ -Isrc/include -c *.cpp
-grid.cpp:8:7: error: redefinition of 'class Grid'
-    8 | class Grid {
-      |       ^~~~
-In file included from grid.cpp:1:
-grid.hpp:7:7: note: previous definition of 'class Grid'
-    7 | class Grid {
-      |       ^~~~
-mingw32-make: *** [makefile:4: compile] Error 1   
-PS D:\Juan Pablo Hernandez Reyes 4D\ea2\P3-EAS02> 
-
-
-
-
-
-
-
-
-
-
-corrige los errores que te mostre para que compile correctamente este codigo
-
 #include "grid.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -33,27 +5,6 @@ corrige los errores que te mostre para que compile correctamente este codigo
 using namespace sf;
 using namespace std;
 
-class Grid {
-private:
-    int rows;
-    int cols;
-    int sizeX;
-    int sizeY;
-    vector<vector<int>> grid;
-    vector<vector<int>> next;
-
-public:
-    Grid(int rows, int cols, int width, int height);
-
-    void drawTo(RenderWindow &window);
-
-    void click(int x, int y);
-
-    void update();
-
-private:
-    int contarEspaciosDisponibles(int i, int j);
-};
 
 Grid::Grid(int rows, int cols, int width, int height)
 {
@@ -147,39 +98,3 @@ int Grid::contarEspaciosDisponibles(int i, int j)
     return availableSpaces;
 }
 
-int main()
-{
-    int width = 800;
-    int height = 600;
-    int rows = 40;
-    int cols = 30;
-
-    RenderWindow window(VideoMode(width, height), "Sand Simulation");
-
-    Grid grid(rows, cols, width, height);
-
-    while (window.isOpen())
-    {
-        Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == Event::Closed)
-                window.close();
-            if (event.type == Event::MouseButtonPressed)
-            {
-                if (event.mouseButton.button == Mouse::Left)
-                {
-                    grid.click(event.mouseButton.x, event.mouseButton.y);
-                }
-            }
-        }
-
-        grid.update();
-
-        window.clear();
-        grid.drawTo(window);
-        window.display();
-    }
-
-    return 0;
-}
